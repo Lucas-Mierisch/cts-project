@@ -1,9 +1,10 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (mySprite.isHittingTile(CollisionDirection.Top)) {
+    if (mySprite.vy <= 8 && mySprite.vy >= 0) {
         mySprite.vy = -200
     }
 })
 let mySprite: Sprite = null
+tiles.setCurrentTilemap(tilemap`level1`)
 mySprite = sprites.create(img`
     . . . . . . . . . . b 5 b . . . 
     . . . . . . . . . b 5 b . . . . 
@@ -26,10 +27,10 @@ mySprite.setStayInScreen(true)
 controller.moveSprite(mySprite, 100, 0)
 forever(function () {
     if (mySprite.isHittingTile(CollisionDirection.Top)) {
+        mySprite.vy = 0
+    } else {
         if (mySprite.vy < 200) {
             mySprite.vy += 8
         }
-    } else {
-        mySprite.vy = 0
     }
 })
