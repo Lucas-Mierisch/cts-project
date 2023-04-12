@@ -934,17 +934,10 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, oth
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (!(roll)) {
         if (FaceLeft) {
-            for (let index = 0; index < 20; index++) {
-                mySprite.x += 1
-                pause(2)
-            }
+            mySprite.x += 2
         } else {
-            for (let index = 0; index < 20; index++) {
-                mySprite.x += -1
-                pause(2)
-            }
+            mySprite.x += -2
         }
-        info.changeLifeBy(-1)
     }
 })
 let FaceLeft = false
@@ -976,25 +969,69 @@ mySprite.setStayInScreen(true)
 controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
 let mysprite2 = sprites.create(img`
-    . . f f f . . . . . . . . f f f 
-    . f f c c . . . . . . f c b b c 
-    f f c c . . . . . . f c b b c . 
-    f c f c . . . . . . f b c c c . 
-    f f f c c . c c . f c b b c c . 
-    f f c 3 c c 3 c c f b c b b c . 
-    f f b 3 b c 3 b c f b c c b c . 
-    . c b b b b b b c b b c c c . . 
-    . c 1 b b b 1 b b c c c c . . . 
-    c b b b b b b b b b c c . . . . 
-    c b c b b b c b b b b f . . . . 
-    f b 1 f f f 1 b b b b f c . . . 
-    f b b b b b b b b b b f c c . . 
-    . f b b b b b b b b c f . . . . 
-    . . f b b b b b b c f . . . . . 
-    . . . f f f f f f f . . . . . . 
+    ..fff........fffffffffffffffffffffffffffffffffffffffffffffff
+    .ffcc......fcbbcfffffffffffffff666ffffffffffffffffffffffffff
+    ffcc......fcbbcfffffffffffff666686666fffffffffffffffffffffff
+    fcfc......fbcccffffffffff66668888f88666fffffffffffffffffffff
+    fffcc.cc.fcbbccfffffffff66888888ff888866ffffffffffffffffffff
+    ffc3cc3ccfbcbbcffffffff66888888fff888886ffffffffffffffffffff
+    ffb3bc3bcfbccbcfffff6668888888fff88888f6ffffffffffffffffffff
+    .cbbbbbbcbbcccfffff66f6888888fff888888f88fffffffffffffffffff
+    .c1bbb1bbccccffffff6ff668888fff888888fff8fffffffffffffffffff
+    cbbbbbbbbbccfffffff66ff6688fff888888ffff8fffffffffffffffffff
+    cbcbbbcbbbbfffffffff6666666ff888888fffff8fffffffffffffffffff
+    fb1fff1bbbbfcfffffffffffff6666888fffffff8fffffffffffffffffff
+    fbbbbbbbbbbfccfffffffffff8fff666ffffffff8fffffffffffffffffff
+    ffbbbbbbbbcfffffffffffff8ffffff688ffffff8fffffffffffffffffff
+    fffbbbbbbcfffffffffffff8ff888888f88888888fffffffffffffffffff
+    ffffffffffffffffffffff8ff88fdffd8f8888ff8fffffffffffffffffff
+    ffffffffffffffffffffff8ff8f1df1ddf8ff8888fffffffffffffffffff
+    ffffffffffffffffffffff8f8ddddddddf8fffffffffffffffffffffffff
+    ffffffffffffffffffffff8ffdddddfddf8fffffffffffffffffffffffff
+    ffffffffffffffffffffff8cffddffddff8fffffffffffffffffffffffff
+    fffffffffffffffffffff8ccfffddddfff8fffffffffffffffffffffffff
+    ffffffffffffffffffff88cfff888dd88f8fffffffffffffffffffffffff
+    fffffffffffffffffff88dffd8d58d88f88fffffffffffffffffffffffff
+    fffffffffffffffcff8ccdffd.55.5d88858ffffff88ffffffffffffffff
+    ffffffffffffffccffcc5dfdd5.5....8888ffff88ffffffffffffffffff
+    ffffffffffffffcfcccfd5dfd5.5....d8ff88f8ffffffffffffffffffff
+    ffffffffffffffccc8fd.5ff5..5....d8dfff8fffffffffffffffffffff
+    fffffffffffffffff8fddd5f5..55...d8fd8fffffffffffffffffffffff
+    fffffffffffffffff8fddff5d...5...d8ff8fffffffffffffffffffffff
+    fffffffffffffffff8fdffffd...5....d8f88dfffffffffffffffffffff
+    ffffffffffffffff8fffffffd...5....d8ff8ddffffffffffffffffffff
+    fffffffffffffff88fffffffd...5....d8ff8fddfffffffffffffffffff
+    fffffffffffffff8ff8fffffd..55....d8ff8fffddfffffffffffffffff
+    fffffffffffffff8ff8ff8ffd555.....d5ff8fffffdffffffffffffffff
+    fffffffffffffff8ff8ff8f555.ddddddd55f8ffffffdfffffffffffffff
+    fffffffffffffff8ff8fff85ffdffffffff55f8fffffffffffffffffffff
+    fffffffffffffff8ff88ff55fdfffffdffff5f8fffffffffffffffffffff
+    fffffffffffffff8fff8f55ffdfffffdffff558fffffffffffffffffffff
+    fffffffffffffff8fff855ffdffffffdfffff588ffffffffffffffffffff
+    fffffffffffffff88ff85fff88888888fffff5f8ffffffffffffffffffff
+    ffffffffffffffff8ff558888ffffff8888885f88fffffffffffffffffff
+    ffffffffffffffff88858ffdfffffffdfffff5888fffffffffffffffffff
+    ffffffffffffffffff55fffdfffffffdfffff5ffffffffffffffffffffff
+    ffffffffffffffffff5fffddfffffffdfffff5ffffffffffffffffffffff
+    fffffffffffffffff55fffdffffffffdfffff5ffffffffffffffffffffff
+    fffffffffffffffff5ffffdffffffffdffff55ffffffffffffffffffffff
+    ffffffffffffffff5fffffdffffffffdff5555ffffffffffffffffffffff
+    fffffffffffffff55ffffddfffffff55555fffffffffffffffffffffffff
+    fffffffffffffff5fffffdfffff5555fdfffffffffffffffffffffffffff
+    fffffffffffffff5555ffdf55555ffffdfffffffffffffffffffffffffff
+    ffffffffffffffffff555555ffffffffdfffffffffffffffffffffffffff
+    ffffffffffffffffffffdfffffffffffdfffffffffffffffffffffffffff
+    ffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffdfffffffffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+    ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
     `, SpriteKind.Enemy)
 tiles.placeOnTile(mysprite2, tiles.getTileLocation(17, 8))
-info.setLife(5)
+info.setLife(4)
 forever(function () {
     if (mySprite.vy < 200) {
         mySprite.vy += 8
