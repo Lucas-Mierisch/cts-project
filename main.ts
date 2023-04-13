@@ -944,7 +944,7 @@ let FaceLeft = false
 let projectile: Sprite = null
 let roll = false
 let mySprite: Sprite = null
-let Levels = [tilemap`level2`, tilemap`level2`]
+let Levels = [tilemap`level0`, tilemap`level0`]
 tiles.setCurrentTilemap(Levels[0])
 scene.setBackgroundColor(11)
 mySprite = sprites.create(img`
