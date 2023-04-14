@@ -1,6 +1,9 @@
+namespace SpriteKind {
+    export const sword = SpriteKind.create()
+}
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(roll)) {
-        projectile = sprites.createProjectileFromSprite(img`
+        Sword = sprites.create(img`
             ............................................................
             ............................................................
             ............................................................
@@ -47,10 +50,11 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             ............................................................
             ............................................................
             ............................................................
-            `, mySprite, 0, 0)
+            `, SpriteKind.sword)
+        Sword.setPosition(mySprite.x, mySprite.y)
         if (controller.up.isPressed()) {
             animation.runImageAnimation(
-            projectile,
+            Sword,
             [img`
                 ..............................................
                 ..............................................
@@ -225,7 +229,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             )
         } else if (FaceLeft) {
             animation.runImageAnimation(
-            projectile,
+            Sword,
             [img`
                 .......................................................
                 .......................................................
@@ -373,7 +377,7 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             )
         } else {
             animation.runImageAnimation(
-            projectile,
+            Sword,
             [img`
                 .......................................................
                 .......................................................
@@ -521,8 +525,11 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
             )
         }
         pause(300)
-        sprites.destroy(projectile)
+        sprites.destroy(Sword)
     }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.sword, function (sprite, otherSprite) {
+    Sword.setPosition(mySprite.x, mySprite.y)
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(roll)) {
@@ -607,8 +614,8 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
         100,
         true
         )
-        FaceLeft = true
     }
+    FaceLeft = true
 })
 controller.right.onEvent(ControllerButtonEvent.Released, function () {
     if (!(roll)) {
@@ -736,11 +743,8 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         100,
         true
         )
-        FaceLeft = false
     }
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Projectile, function (sprite, otherSprite) {
-    projectile.setPosition(mySprite.x, mySprite.y)
+    FaceLeft = false
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     roll = true
@@ -769,167 +773,393 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
             mySprite.x += -1
             pause(2)
         }
-        animation.runImageAnimation(
-        mySprite,
-        [img`
-            . . . . f f f f f f . . . . . . 
-            . . . f 2 f e e e e f f . . . . 
-            . . f 2 2 2 f e e e e f f . . . 
-            . . f e e e e f f e e e f . . . 
-            . f e 2 2 2 2 e e f f f f . . . 
-            . f 2 e f f f f 2 2 2 e f . . . 
-            . f f f e e e f f f f f f f . . 
-            . f e e 4 4 f b e 4 4 e f f . . 
-            . . f e d d f 1 4 d 4 e e f . . 
-            . . . f d d d d 4 e e e f . . . 
-            . . . f e 4 4 4 e e f f . . . . 
-            . . . f 2 2 2 e d d 4 . . . . . 
-            . . . f 2 2 2 e d d e . . . . . 
-            . . . f 5 5 4 f e e f . . . . . 
-            . . . . f f f f f f . . . . . . 
-            . . . . . . f f f . . . . . . . 
-            `,img`
-            . . . . . . . . . . . . . . . . 
-            . . . . f f f f f f . . . . . . 
-            . . . f 2 f e e e e f f . . . . 
-            . . f 2 2 2 f e e e e f f . . . 
-            . . f e e e e f f e e e f . . . 
-            . f e 2 2 2 2 e e f f f f . . . 
-            . f 2 e f f f f 2 2 2 e f . . . 
-            . f f f e e e f f f f f f f . . 
-            . f e e 4 4 f b e 4 4 e f f . . 
-            . . f e d d f 1 4 d 4 e e f . . 
-            . . . f d d d e e e e e f . . . 
-            . . . f e 4 e d d 4 f . . . . . 
-            . . . f 2 2 e d d e f . . . . . 
-            . . f f 5 5 f e e f f f . . . . 
-            . . f f f f f f f f f f . . . . 
-            . . . f f f . . . f f . . . . . 
-            `,img`
-            . . . . f f f f f f . . . . . . 
-            . . . f 2 f e e e e f f . . . . 
-            . . f 2 2 2 f e e e e f f . . . 
-            . . f e e e e f f e e e f . . . 
-            . f e 2 2 2 2 e e f f f f . . . 
-            . f 2 e f f f f 2 2 2 e f . . . 
-            . f f f e e e f f f f f f f . . 
-            . f e e 4 4 f b e 4 4 e f f . . 
-            . . f e d d f 1 4 d 4 e e f . . 
-            . . . f d d d d 4 e e e f . . . 
-            . . . f e 4 4 4 e e f f . . . . 
-            . . . f 2 2 2 e d d 4 . . . . . 
-            . . . f 2 2 2 e d d e . . . . . 
-            . . . f 5 5 4 f e e f . . . . . 
-            . . . . f f f f f f . . . . . . 
-            . . . . . . f f f . . . . . . . 
-            `,img`
-            . . . . . . . . . . . . . . . . 
-            . . . . f f f f f f . . . . . . 
-            . . . f 2 f e e e e f f . . . . 
-            . . f 2 2 2 f e e e e f f . . . 
-            . . f e e e e f f e e e f . . . 
-            . f e 2 2 2 2 e e f f f f . . . 
-            . f 2 e f f f f 2 2 2 e f . . . 
-            . f f f e e e f f f f f f f . . 
-            . f e e 4 4 f b e 4 4 e f f . . 
-            . . f e d d f 1 4 d 4 e e f . . 
-            . . . f d d d d 4 e e e f . . . 
-            . . . f e 4 4 4 e d d 4 . . . . 
-            . . . f 2 2 2 2 e d d e . . . . 
-            . . f f 5 5 4 4 f e e f . . . . 
-            . . f f f f f f f f f f . . . . 
-            . . . f f f . . . f f . . . . . 
-            `],
-        100,
-        true
-        )
+        if (FaceLeft) {
+            animation.runImageAnimation(
+            mySprite,
+            [img`
+                . . . . f f f f f f . . . . . . 
+                . . . f 2 f e e e e f f . . . . 
+                . . f 2 2 2 f e e e e f f . . . 
+                . . f e e e e f f e e e f . . . 
+                . f e 2 2 2 2 e e f f f f . . . 
+                . f 2 e f f f f 2 2 2 e f . . . 
+                . f f f e e e f f f f f f f . . 
+                . f e e 4 4 f b e 4 4 e f f . . 
+                . . f e d d f 1 4 d 4 e e f . . 
+                . . . f d d d d 4 e e e f . . . 
+                . . . f e 4 4 4 e e f f . . . . 
+                . . . f 2 2 2 e d d 4 . . . . . 
+                . . . f 2 2 2 e d d e . . . . . 
+                . . . f 5 5 4 f e e f . . . . . 
+                . . . . f f f f f f . . . . . . 
+                . . . . . . f f f . . . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . f f f f f f . . . . . . 
+                . . . f 2 f e e e e f f . . . . 
+                . . f 2 2 2 f e e e e f f . . . 
+                . . f e e e e f f e e e f . . . 
+                . f e 2 2 2 2 e e f f f f . . . 
+                . f 2 e f f f f 2 2 2 e f . . . 
+                . f f f e e e f f f f f f f . . 
+                . f e e 4 4 f b e 4 4 e f f . . 
+                . . f e d d f 1 4 d 4 e e f . . 
+                . . . f d d d e e e e e f . . . 
+                . . . f e 4 e d d 4 f . . . . . 
+                . . . f 2 2 e d d e f . . . . . 
+                . . f f 5 5 f e e f f f . . . . 
+                . . f f f f f f f f f f . . . . 
+                . . . f f f . . . f f . . . . . 
+                `,img`
+                . . . . f f f f f f . . . . . . 
+                . . . f 2 f e e e e f f . . . . 
+                . . f 2 2 2 f e e e e f f . . . 
+                . . f e e e e f f e e e f . . . 
+                . f e 2 2 2 2 e e f f f f . . . 
+                . f 2 e f f f f 2 2 2 e f . . . 
+                . f f f e e e f f f f f f f . . 
+                . f e e 4 4 f b e 4 4 e f f . . 
+                . . f e d d f 1 4 d 4 e e f . . 
+                . . . f d d d d 4 e e e f . . . 
+                . . . f e 4 4 4 e e f f . . . . 
+                . . . f 2 2 2 e d d 4 . . . . . 
+                . . . f 2 2 2 e d d e . . . . . 
+                . . . f 5 5 4 f e e f . . . . . 
+                . . . . f f f f f f . . . . . . 
+                . . . . . . f f f . . . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . f f f f f f . . . . . . 
+                . . . f 2 f e e e e f f . . . . 
+                . . f 2 2 2 f e e e e f f . . . 
+                . . f e e e e f f e e e f . . . 
+                . f e 2 2 2 2 e e f f f f . . . 
+                . f 2 e f f f f 2 2 2 e f . . . 
+                . f f f e e e f f f f f f f . . 
+                . f e e 4 4 f b e 4 4 e f f . . 
+                . . f e d d f 1 4 d 4 e e f . . 
+                . . . f d d d d 4 e e e f . . . 
+                . . . f e 4 4 4 e d d 4 . . . . 
+                . . . f 2 2 2 2 e d d e . . . . 
+                . . f f 5 5 4 4 f e e f . . . . 
+                . . f f f f f f f f f f . . . . 
+                . . . f f f . . . f f . . . . . 
+                `],
+            100,
+            true
+            )
+        } else {
+            animation.runImageAnimation(
+            mySprite,
+            [img`
+                . . . . . . f f f f f f . . . . 
+                . . . . f f e e e e f 2 f . . . 
+                . . . f f e e e e f 2 2 2 f . . 
+                . . . f e e e f f e e e e f . . 
+                . . . f f f f e e 2 2 2 2 e f . 
+                . . . f e 2 2 2 f f f f e 2 f . 
+                . . f f f f f f f e e e f f f . 
+                . . f f e 4 4 e b f 4 4 e e f . 
+                . . f e e 4 d 4 1 f d d e f . . 
+                . . . f e e e 4 d d d d f . . . 
+                . . . . f f e e 4 4 4 e f . . . 
+                . . . . . 4 d d e 2 2 2 f . . . 
+                . . . . . e d d e 2 2 2 f . . . 
+                . . . . . f e e f 4 5 5 f . . . 
+                . . . . . . f f f f f f . . . . 
+                . . . . . . . f f f . . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . f f f f f f . . . . 
+                . . . . f f e e e e f 2 f . . . 
+                . . . f f e e e e f 2 2 2 f . . 
+                . . . f e e e f f e e e e f . . 
+                . . . f f f f e e 2 2 2 2 e f . 
+                . . . f e 2 2 2 f f f f e 2 f . 
+                . . f f f f f f f e e e f f f . 
+                . . f f e 4 4 e b f 4 4 e e f . 
+                . . f e e 4 d 4 1 f d d e f . . 
+                . . . f e e e e e d d d f . . . 
+                . . . . . f 4 d d e 4 e f . . . 
+                . . . . . f e d d e 2 2 f . . . 
+                . . . . f f f e e f 5 5 f f . . 
+                . . . . f f f f f f f f f f . . 
+                . . . . . f f . . . f f f . . . 
+                `,img`
+                . . . . . . f f f f f f . . . . 
+                . . . . f f e e e e f 2 f . . . 
+                . . . f f e e e e f 2 2 2 f . . 
+                . . . f e e e f f e e e e f . . 
+                . . . f f f f e e 2 2 2 2 e f . 
+                . . . f e 2 2 2 f f f f e 2 f . 
+                . . f f f f f f f e e e f f f . 
+                . . f f e 4 4 e b f 4 4 e e f . 
+                . . f e e 4 d 4 1 f d d e f . . 
+                . . . f e e e 4 d d d d f . . . 
+                . . . . f f e e 4 4 4 e f . . . 
+                . . . . . 4 d d e 2 2 2 f . . . 
+                . . . . . e d d e 2 2 2 f . . . 
+                . . . . . f e e f 4 5 5 f . . . 
+                . . . . . . f f f f f f . . . . 
+                . . . . . . . f f f . . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . f f f f f f . . . . 
+                . . . . f f e e e e f 2 f . . . 
+                . . . f f e e e e f 2 2 2 f . . 
+                . . . f e e e f f e e e e f . . 
+                . . . f f f f e e 2 2 2 2 e f . 
+                . . . f e 2 2 2 f f f f e 2 f . 
+                . . f f f f f f f e e e f f f . 
+                . . f f e 4 4 e b f 4 4 e e f . 
+                . . f e e 4 d 4 1 f d d e f . . 
+                . . . f e e e 4 d d d d f . . . 
+                . . . . 4 d d e 4 4 4 e f . . . 
+                . . . . e d d e 2 2 2 2 f . . . 
+                . . . . f e e f 4 4 5 5 f f . . 
+                . . . . f f f f f f f f f f . . 
+                . . . . . f f . . . f f f . . . 
+                `],
+            100,
+            true
+            )
+        }
     } else {
         for (let index = 0; index < 65; index++) {
             mySprite.x += 1
             pause(2)
         }
-        animation.runImageAnimation(
-        mySprite,
-        [img`
-            . . . . . . f f f f f f . . . . 
-            . . . . f f e e e e f 2 f . . . 
-            . . . f f e e e e f 2 2 2 f . . 
-            . . . f e e e f f e e e e f . . 
-            . . . f f f f e e 2 2 2 2 e f . 
-            . . . f e 2 2 2 f f f f e 2 f . 
-            . . f f f f f f f e e e f f f . 
-            . . f f e 4 4 e b f 4 4 e e f . 
-            . . f e e 4 d 4 1 f d d e f . . 
-            . . . f e e e 4 d d d d f . . . 
-            . . . . f f e e 4 4 4 e f . . . 
-            . . . . . 4 d d e 2 2 2 f . . . 
-            . . . . . e d d e 2 2 2 f . . . 
-            . . . . . f e e f 4 5 5 f . . . 
-            . . . . . . f f f f f f . . . . 
-            . . . . . . . f f f . . . . . . 
-            `,img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . f f f f f f . . . . 
-            . . . . f f e e e e f 2 f . . . 
-            . . . f f e e e e f 2 2 2 f . . 
-            . . . f e e e f f e e e e f . . 
-            . . . f f f f e e 2 2 2 2 e f . 
-            . . . f e 2 2 2 f f f f e 2 f . 
-            . . f f f f f f f e e e f f f . 
-            . . f f e 4 4 e b f 4 4 e e f . 
-            . . f e e 4 d 4 1 f d d e f . . 
-            . . . f e e e e e d d d f . . . 
-            . . . . . f 4 d d e 4 e f . . . 
-            . . . . . f e d d e 2 2 f . . . 
-            . . . . f f f e e f 5 5 f f . . 
-            . . . . f f f f f f f f f f . . 
-            . . . . . f f . . . f f f . . . 
-            `,img`
-            . . . . . . f f f f f f . . . . 
-            . . . . f f e e e e f 2 f . . . 
-            . . . f f e e e e f 2 2 2 f . . 
-            . . . f e e e f f e e e e f . . 
-            . . . f f f f e e 2 2 2 2 e f . 
-            . . . f e 2 2 2 f f f f e 2 f . 
-            . . f f f f f f f e e e f f f . 
-            . . f f e 4 4 e b f 4 4 e e f . 
-            . . f e e 4 d 4 1 f d d e f . . 
-            . . . f e e e 4 d d d d f . . . 
-            . . . . f f e e 4 4 4 e f . . . 
-            . . . . . 4 d d e 2 2 2 f . . . 
-            . . . . . e d d e 2 2 2 f . . . 
-            . . . . . f e e f 4 5 5 f . . . 
-            . . . . . . f f f f f f . . . . 
-            . . . . . . . f f f . . . . . . 
-            `,img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . f f f f f f . . . . 
-            . . . . f f e e e e f 2 f . . . 
-            . . . f f e e e e f 2 2 2 f . . 
-            . . . f e e e f f e e e e f . . 
-            . . . f f f f e e 2 2 2 2 e f . 
-            . . . f e 2 2 2 f f f f e 2 f . 
-            . . f f f f f f f e e e f f f . 
-            . . f f e 4 4 e b f 4 4 e e f . 
-            . . f e e 4 d 4 1 f d d e f . . 
-            . . . f e e e 4 d d d d f . . . 
-            . . . . 4 d d e 4 4 4 e f . . . 
-            . . . . e d d e 2 2 2 2 f . . . 
-            . . . . f e e f 4 4 5 5 f f . . 
-            . . . . f f f f f f f f f f . . 
-            . . . . . f f . . . f f f . . . 
-            `],
-        100,
-        true
-        )
+        if (FaceLeft) {
+            animation.runImageAnimation(
+            mySprite,
+            [img`
+                . . . . f f f f f f . . . . . . 
+                . . . f 2 f e e e e f f . . . . 
+                . . f 2 2 2 f e e e e f f . . . 
+                . . f e e e e f f e e e f . . . 
+                . f e 2 2 2 2 e e f f f f . . . 
+                . f 2 e f f f f 2 2 2 e f . . . 
+                . f f f e e e f f f f f f f . . 
+                . f e e 4 4 f b e 4 4 e f f . . 
+                . . f e d d f 1 4 d 4 e e f . . 
+                . . . f d d d d 4 e e e f . . . 
+                . . . f e 4 4 4 e e f f . . . . 
+                . . . f 2 2 2 e d d 4 . . . . . 
+                . . . f 2 2 2 e d d e . . . . . 
+                . . . f 5 5 4 f e e f . . . . . 
+                . . . . f f f f f f . . . . . . 
+                . . . . . . f f f . . . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . f f f f f f . . . . . . 
+                . . . f 2 f e e e e f f . . . . 
+                . . f 2 2 2 f e e e e f f . . . 
+                . . f e e e e f f e e e f . . . 
+                . f e 2 2 2 2 e e f f f f . . . 
+                . f 2 e f f f f 2 2 2 e f . . . 
+                . f f f e e e f f f f f f f . . 
+                . f e e 4 4 f b e 4 4 e f f . . 
+                . . f e d d f 1 4 d 4 e e f . . 
+                . . . f d d d e e e e e f . . . 
+                . . . f e 4 e d d 4 f . . . . . 
+                . . . f 2 2 e d d e f . . . . . 
+                . . f f 5 5 f e e f f f . . . . 
+                . . f f f f f f f f f f . . . . 
+                . . . f f f . . . f f . . . . . 
+                `,img`
+                . . . . f f f f f f . . . . . . 
+                . . . f 2 f e e e e f f . . . . 
+                . . f 2 2 2 f e e e e f f . . . 
+                . . f e e e e f f e e e f . . . 
+                . f e 2 2 2 2 e e f f f f . . . 
+                . f 2 e f f f f 2 2 2 e f . . . 
+                . f f f e e e f f f f f f f . . 
+                . f e e 4 4 f b e 4 4 e f f . . 
+                . . f e d d f 1 4 d 4 e e f . . 
+                . . . f d d d d 4 e e e f . . . 
+                . . . f e 4 4 4 e e f f . . . . 
+                . . . f 2 2 2 e d d 4 . . . . . 
+                . . . f 2 2 2 e d d e . . . . . 
+                . . . f 5 5 4 f e e f . . . . . 
+                . . . . f f f f f f . . . . . . 
+                . . . . . . f f f . . . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . f f f f f f . . . . . . 
+                . . . f 2 f e e e e f f . . . . 
+                . . f 2 2 2 f e e e e f f . . . 
+                . . f e e e e f f e e e f . . . 
+                . f e 2 2 2 2 e e f f f f . . . 
+                . f 2 e f f f f 2 2 2 e f . . . 
+                . f f f e e e f f f f f f f . . 
+                . f e e 4 4 f b e 4 4 e f f . . 
+                . . f e d d f 1 4 d 4 e e f . . 
+                . . . f d d d d 4 e e e f . . . 
+                . . . f e 4 4 4 e d d 4 . . . . 
+                . . . f 2 2 2 2 e d d e . . . . 
+                . . f f 5 5 4 4 f e e f . . . . 
+                . . f f f f f f f f f f . . . . 
+                . . . f f f . . . f f . . . . . 
+                `],
+            100,
+            true
+            )
+        } else {
+            animation.runImageAnimation(
+            mySprite,
+            [img`
+                . . . . . . f f f f f f . . . . 
+                . . . . f f e e e e f 2 f . . . 
+                . . . f f e e e e f 2 2 2 f . . 
+                . . . f e e e f f e e e e f . . 
+                . . . f f f f e e 2 2 2 2 e f . 
+                . . . f e 2 2 2 f f f f e 2 f . 
+                . . f f f f f f f e e e f f f . 
+                . . f f e 4 4 e b f 4 4 e e f . 
+                . . f e e 4 d 4 1 f d d e f . . 
+                . . . f e e e 4 d d d d f . . . 
+                . . . . f f e e 4 4 4 e f . . . 
+                . . . . . 4 d d e 2 2 2 f . . . 
+                . . . . . e d d e 2 2 2 f . . . 
+                . . . . . f e e f 4 5 5 f . . . 
+                . . . . . . f f f f f f . . . . 
+                . . . . . . . f f f . . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . f f f f f f . . . . 
+                . . . . f f e e e e f 2 f . . . 
+                . . . f f e e e e f 2 2 2 f . . 
+                . . . f e e e f f e e e e f . . 
+                . . . f f f f e e 2 2 2 2 e f . 
+                . . . f e 2 2 2 f f f f e 2 f . 
+                . . f f f f f f f e e e f f f . 
+                . . f f e 4 4 e b f 4 4 e e f . 
+                . . f e e 4 d 4 1 f d d e f . . 
+                . . . f e e e e e d d d f . . . 
+                . . . . . f 4 d d e 4 e f . . . 
+                . . . . . f e d d e 2 2 f . . . 
+                . . . . f f f e e f 5 5 f f . . 
+                . . . . f f f f f f f f f f . . 
+                . . . . . f f . . . f f f . . . 
+                `,img`
+                . . . . . . f f f f f f . . . . 
+                . . . . f f e e e e f 2 f . . . 
+                . . . f f e e e e f 2 2 2 f . . 
+                . . . f e e e f f e e e e f . . 
+                . . . f f f f e e 2 2 2 2 e f . 
+                . . . f e 2 2 2 f f f f e 2 f . 
+                . . f f f f f f f e e e f f f . 
+                . . f f e 4 4 e b f 4 4 e e f . 
+                . . f e e 4 d 4 1 f d d e f . . 
+                . . . f e e e 4 d d d d f . . . 
+                . . . . f f e e 4 4 4 e f . . . 
+                . . . . . 4 d d e 2 2 2 f . . . 
+                . . . . . e d d e 2 2 2 f . . . 
+                . . . . . f e e f 4 5 5 f . . . 
+                . . . . . . f f f f f f . . . . 
+                . . . . . . . f f f . . . . . . 
+                `,img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . f f f f f f . . . . 
+                . . . . f f e e e e f 2 f . . . 
+                . . . f f e e e e f 2 2 2 f . . 
+                . . . f e e e f f e e e e f . . 
+                . . . f f f f e e 2 2 2 2 e f . 
+                . . . f e 2 2 2 f f f f e 2 f . 
+                . . f f f f f f f e e e f f f . 
+                . . f f e 4 4 e b f 4 4 e e f . 
+                . . f e e 4 d 4 1 f d d e f . . 
+                . . . f e e e 4 d d d d f . . . 
+                . . . . 4 d d e 4 4 4 e f . . . 
+                . . . . e d d e 2 2 2 2 f . . . 
+                . . . . f e e f 4 4 5 5 f f . . 
+                . . . . f f f f f f f f f f . . 
+                . . . . . f f . . . f f f . . . 
+                `],
+            100,
+            true
+            )
+        }
     }
     roll = false
     controller.moveSprite(mySprite, 100, 0)
     pause(500)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
+	
+})
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.startEffect(effects.ashes, 200)
     pause(300)
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, function (sprite, location) {
+    currentLevel += 1
+    tiles.setCurrentTilemap(Levels[currentLevel])
+    if (currentLevel == 1) {
+        tiles.placeOnTile(mySprite, tiles.getTileLocation(0, 5))
+        BBActive = true
+        BlueBoss = sprites.create(img`
+            .................666....1................
+            ..............6666866661.................
+            ...........66668888f88666................
+            ..........66888888ff888866...............
+            .........66888888fff888886...............
+            ......6668888888fff88888f6...............
+            .....66f6888888fff888888f88..............
+            .....6ff668888fff888888fff8..............
+            .....66ff6688fff888888ffff8..............
+            ......6666666ff888888fffff8..............
+            ............6666888fffffff8......88......
+            ...........8fff666ffffffff8.....8118.....
+            ..........8ffffff688ffffff8....81f118888.
+            .........8ff888888f88888888...81f1f181118
+            ........8ff88fdffd8f8888ff8..81f11161f118
+            ........8ff8f1df1ddf8..8888.8111f161f1f8.
+            ........8f8ddddddddf8.......8811161f118f8
+            ........8ffdddddfddf8......8ff81611118ff8
+            ........8cffddffddff8.......888688818ff8.
+            .......8ccfffddddfff8..........8fff8ff8..
+            ......88cfff888dd88f8...........88fff8...
+            .....88ffff8f88d88f88.........d...8f8....
+            .c..8dcfffff8ff8f88f88......8d.d...8.....
+            cc..dcd8fff8ffffff88f8.....8fdd..........
+            c.cccdd8fff8fffffff8ff88.88ff88..........
+            ccc888ff8f8ff8fffff88fff8fff8............
+            ...8ff8ff88f888ffff8f88fff88.............
+            ...8fff8f8ff8f8ffff8ff88f8...............
+            ...8fff8fff8ff8fffff8f8.8................
+            ..8fffff8f8fff8fffff8ff8.................
+            .88ffffff8ffff8fffff8ff8.................
+            .8ff8ffffffff88fffff8ff8.................
+            .8ff8ff8fff888ffffff8ff8.................
+            .8ff8ff8f888ffffffff88f8.................
+            .8ff8fff88fffffffffff88f8................
+            .8ff88ff88ff66ffffffff8f8................
+            .8fff8f88ff6ffffff6fff888................
+            .8fff888ff6fff66fff6fff888...............
+            .88ff88fff6ff6fffff6fff8f8...............
+            ..8ff88fff6ff6fffff6fff8f88..............
+            ..88888ff6fff6ffff6ffff8888..............
+            ....88fff6ff6fffff6ffff8.................
+            ....8fff6fff6ffff6fffff8.................
+            ...88ff6fff6fff66ffffff8.................
+            ...8f66ffff6ffffffffff88.................
+            ..8fffffff6fffffffff888..................
+            .88fffff66ffffff88888....................
+            .8fffffffffff88888bb8....................
+            .8888ffff88888...8bb8....................
+            ....888888.......8bb8....................
+            ....8bb8.........8bbb8...................
+            ....8bb8..........8bb8...................
+            ...8bb8...........8bb8...................
+            ...88b8...........8b88...................
+            ...8f88888.......888f8...................
+            ...8fffff8.......8fff8...................
+            ...888888.........8888...................
+            `, SpriteKind.Enemy)
+        tiles.placeOnTile(BlueBoss, tiles.getTileLocation(6, 4))
+        BlueBoss.y += -5
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (!(roll)) {
@@ -940,12 +1170,20 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         }
     }
 })
+let BlueBullet: Sprite = null
+let BBLeft = false
+let BlueBoss: Sprite = null
 let FaceLeft = false
-let projectile: Sprite = null
+let Sword: Sprite = null
 let roll = false
 let mySprite: Sprite = null
-let Levels = [tilemap`level2`, tilemap`level2`]
-tiles.setCurrentTilemap(Levels[0])
+let Levels: tiles.TileMapData[] = []
+let currentLevel = 0
+let BBActive = false
+BBActive = false
+currentLevel = 0
+Levels = [tilemap`level2`, tilemap`level6`]
+tiles.setCurrentTilemap(Levels[currentLevel])
 scene.setBackgroundColor(11)
 mySprite = sprites.create(img`
     . . . . . . . . . . b 5 b . . . 
@@ -968,69 +1206,158 @@ mySprite = sprites.create(img`
 mySprite.setStayInScreen(true)
 controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
-let mysprite2 = sprites.create(img`
-    .................666....1................
-    ..............6666866661.................
-    ...........66668888f88666................
-    ..........66888888ff888866...............
-    .........66888888fff888886...............
-    ......6668888888fff88888f6...............
-    .....66f6888888fff888888f88..............
-    .....6ff668888fff888888fff8..............
-    .....66ff6688fff888888ffff8..............
-    ......6666666ff888888fffff8..............
-    ............6666888fffffff8......88......
-    ...........8fff666ffffffff8.....8118.....
-    ..........8ffffff688ffffff8....81f118888.
-    .........8ff888888f88888888...81f1f181118
-    ........8ff88fdffd8f8888ff8..81f11161f118
-    ........8ff8f1df1ddf8..8888.8111f161f1f8.
-    ........8f8ddddddddf8.......8811161f118f8
-    ........8ffdddddfddf8......8ff81611118ff8
-    ........8cffddffddff8.......888688818ff8.
-    .......8ccfffddddfff8..........8fff8ff8..
-    ......88cfff888dd88f8...........88fff8...
-    .....88ffff8f88d88f88.........d...8f8....
-    .c..8dcfffff8ff8f88f88......8d.d...8.....
-    cc..dcd8fff8ffffff88f8.....8fdd..........
-    c.cccdd8fff8fffffff8ff88.88ff88..........
-    ccc888ff8f8ff8fffff88fff8fff8............
-    ...8ff8ff88f888ffff8f88fff88.............
-    ...8fff8f8ff8f8ffff8ff88f8...............
-    ...8fff8fff8ff8fffff8f8.8................
-    ..8fffff8f8fff8fffff8ff8.................
-    .88ffffff8ffff8fffff8ff8.................
-    .8ff8ffffffff88fffff8ff8.................
-    .8ff8ff8fff888ffffff8ff8.................
-    .8ff8ff8f888ffffffff88f8.................
-    .8ff8fff88fffffffffff88f8................
-    .8ff88ff88ff66ffffffff8f8................
-    .8fff8f88ff6ffffff6fff888................
-    .8fff888ff6fff66fff6fff888...............
-    .88ff88fff6ff6fffff6fff8f8...............
-    ..8ff88fff6ff6fffff6fff8f88..............
-    ..88888ff6fff6ffff6ffff8888..............
-    ....88fff6ff6fffff6ffff8.................
-    ....8fff6fff6ffff6fffff8.................
-    ...88ff6fff6fff66ffffff8.................
-    ...8f66ffff6ffffffffff88.................
-    ..8fffffff6fffffffff888..................
-    .88fffff66ffffff88888....................
-    .8fffffffffff88888bb8....................
-    .8888ffff88888...8bb8....................
-    ....888888.......8bb8....................
-    ....8bb8.........8bbb8...................
-    ....8bb8..........8bb8...................
-    ...8bb8...........8bb8...................
-    ...88b8...........8b88...................
-    ...8f88888.......888f8...................
-    ...8fffff8.......8fff8...................
-    ...888888.........8888...................
-    `, SpriteKind.Enemy)
-tiles.placeOnTile(mysprite2, tiles.getTileLocation(17, 8))
 info.setLife(4)
 forever(function () {
     if (mySprite.vy < 200) {
         mySprite.vy += 8
+    }
+})
+game.onUpdateInterval(100, function () {
+    if (BBActive) {
+        if (mySprite.x < BlueBoss.x) {
+            BBLeft = true
+            BlueBoss.setImage(img`
+                .................666....1................
+                ..............6666866661.................
+                ...........66668888f88666................
+                ..........66888888ff888866...............
+                .........66888888fff888886...............
+                ......6668888888fff88888f6...............
+                .....66f6888888fff888888f88..............
+                .....6ff668888fff888888fff8..............
+                .....66ff6688fff888888ffff8..............
+                ......6666666ff888888fffff8..............
+                ............6666888fffffff8......88......
+                ...........8fff666ffffffff8.....8118.....
+                ..........8ffffff688ffffff8....81f118888.
+                .........8ff888888f88888888...81f1f181118
+                ........8ff88fdffd8f8888ff8..81f11161f118
+                ........8ff8f1df1ddf8..8888.8111f161f1f8.
+                ........8f8ddddddddf8.......8811161f118f8
+                ........8ffdddddfddf8......8ff81611118ff8
+                ........8cffddffddff8.......888688818ff8.
+                .......8ccfffddddfff8..........8fff8ff8..
+                ......88cfff888dd88f8...........88fff8...
+                .....88ffff8f88d88f88.........d...8f8....
+                .c..8dcfffff8ff8f88f88......8d.d...8.....
+                cc..dcd8fff8ffffff88f8.....8fdd..........
+                c.cccdd8fff8fffffff8ff88.88ff88..........
+                ccc888ff8f8ff8fffff88fff8fff8............
+                ...8ff8ff88f888ffff8f88fff88.............
+                ...8fff8f8ff8f8ffff8ff88f8...............
+                ...8fff8fff8ff8fffff8f8.8................
+                ..8fffff8f8fff8fffff8ff8.................
+                .88ffffff8ffff8fffff8ff8.................
+                .8ff8ffffffff88fffff8ff8.................
+                .8ff8ff8fff888ffffff8ff8.................
+                .8ff8ff8f888ffffffff88f8.................
+                .8ff8fff88fffffffffff88f8................
+                .8ff88ff88ff66ffffffff8f8................
+                .8fff8f88ff6ffffff6fff888................
+                .8fff888ff6fff66fff6fff888...............
+                .88ff88fff6ff6fffff6fff8f8...............
+                ..8ff88fff6ff6fffff6fff8f88..............
+                ..88888ff6fff6ffff6ffff8888..............
+                ....88fff6ff6fffff6ffff8.................
+                ....8fff6fff6ffff6fffff8.................
+                ...88ff6fff6fff66ffffff8.................
+                ...8f66ffff6ffffffffff88.................
+                ..8fffffff6fffffffff888..................
+                .88fffff66ffffff88888....................
+                .8fffffffffff88888bb8....................
+                .8888ffff88888...8bb8....................
+                ....888888.......8bb8....................
+                ....8bb8.........8bbb8...................
+                ....8bb8..........8bb8...................
+                ...8bb8...........8bb8...................
+                ...88b8...........8b88...................
+                ...8f88888.......888f8...................
+                ...8fffff8.......8fff8...................
+                ...888888.........8888...................
+                `)
+            BlueBoss.vx = 10
+        } else {
+            BBLeft = false
+            BlueBoss.setImage(img`
+                ................1....666.................
+                .................1666686666..............
+                ................66688f88886666...........
+                ...............668888ff88888866..........
+                ...............688888fff88888866.........
+                ...............6f88888fff8888888666......
+                ..............88f888888fff8888886f66.....
+                ..............8fff888888fff888866ff6.....
+                ..............8ffff888888fff8866ff66.....
+                ..............8fffff888888ff6666666......
+                ......88......8fffffff8886666............
+                .....8118.....8ffffffff666fff8...........
+                .888811f18....8ffffff886ffffff8..........
+                811181f1f18...88888888f888888ff8.........
+                811f16111f18..8ff8888f8dffdf88ff8........
+                .8f1f161f1118.8888..8fdd1fd1f8ff8........
+                8f811f1611188.......8fdddddddd8f8........
+                8ff81111618ff8......8fddfdddddff8........
+                .8ff818886888.......8ffddffddffc8........
+                ..8ff8fff8..........8fffddddfffcc8.......
+                ...8fff88...........8f88dd888fffc88......
+                ....8f8...d.........88f88d88f8ffff88.....
+                .....8...d.d8......88f88f8ff8fffffcd8..c.
+                ..........ddf8.....8f88ffffff8fff8dcd..cc
+                ..........88ff88.88ff8fffffff8fff8ddccc.c
+                ............8fff8fff88fffff8ff8f8ff888ccc
+                .............88fff88f8ffff888f88ff8ff8...
+                ...............8f88ff8ffff8f8ff8f8fff8...
+                ................8.8f8fffff8ff8fff8fff8...
+                .................8ff8fffff8fff8f8fffff8..
+                .................8ff8fffff8ffff8ffffff88.
+                .................8ff8fffff88ffffffff8ff8.
+                .................8ff8ffffff888fff8ff8ff8.
+                .................8f88ffffffff888f8ff8ff8.
+                ................8f88fffffffffff88fff8ff8.
+                ................8f8ffffffff66ff88ff88ff8.
+                ................888fff6ffffff6ff88f8fff8.
+                ...............888fff6fff66fff6ff888fff8.
+                ...............8f8fff6fffff6ff6fff88ff88.
+                ..............88f8fff6fffff6ff6fff88ff8..
+                ..............8888ffff6ffff6fff6ff88888..
+                .................8ffff6fffff6ff6fff88....
+                .................8fffff6ffff6fff6fff8....
+                .................8ffffff66fff6fff6ff88...
+                .................88ffffffffff6ffff66f8...
+                ..................888fffffffff6fffffff8..
+                ....................88888ffffff66fffff88.
+                ....................8bb88888fffffffffff8.
+                ....................8bb8...88888ffff8888.
+                ....................8bb8.......888888....
+                ...................8bbb8.........8bb8....
+                ...................8bb8..........8bb8....
+                ...................8bb8...........8bb8...
+                ...................88b8...........8b88...
+                ...................8f888.......88888f8...
+                ...................8fff8.......8fffff8...
+                ...................8888.........888888...
+                `)
+            BlueBoss.vx = -10
+        }
+        BlueBoss.vy += 2
+        BlueBullet.follow(mySprite)
+        BlueBullet = sprites.createProjectileFromSprite(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . 6 6 6 9 . . . . . 
+            . . . . . . 6 8 8 6 6 9 . 9 9 . 
+            . . . . . . . 6 6 . 9 . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, BlueBoss, 50, 50)
     }
 })
