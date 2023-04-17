@@ -538,6 +538,17 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         }
     }
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    if (!(hurt)) {
+        if (!(roll)) {
+            info.changeLifeBy(-1)
+        }
+        hurt = true
+        pause(5000)
+        hurt = false
+    }
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     if (!(roll)) {
         animation.runImageAnimation(
@@ -745,6 +756,11 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
         )
     }
     FaceLeft = false
+})
+sprites.onOverlap(SpriteKind.sword, SpriteKind.Enemy, function (sprite, otherSprite) {
+    otherSprite.startEffect(effects.ashes, 200)
+    BBHP += -1
+    pause(300)
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     roll = true
@@ -1085,13 +1101,6 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     controller.moveSprite(mySprite, 100, 0)
     pause(500)
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.Player, function (sprite, otherSprite) {
-	
-})
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    otherSprite.startEffect(effects.ashes, 200)
-    pause(300)
-})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, function (sprite, location) {
     currentLevel += 1
     tiles.setCurrentTilemap(Levels[currentLevel])
@@ -1157,8 +1166,10 @@ scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, func
             ...8fffff8.......8fff8...................
             ...888888.........8888...................
             `, SpriteKind.Enemy)
+        BBHP = 10
         tiles.placeOnTile(BlueBoss, tiles.getTileLocation(6, 4))
         BlueBoss.y += -5
+        BBulletArray = []
     }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
@@ -1170,9 +1181,12 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         }
     }
 })
-let BlueBullet: Sprite = null
 let BBLeft = false
+let BlueBullet: Sprite = null
+let BBulletArray: Sprite[] = []
 let BlueBoss: Sprite = null
+let BBHP = 0
+let hurt = false
 let FaceLeft = false
 let Sword: Sprite = null
 let roll = false
@@ -1182,7 +1196,7 @@ let currentLevel = 0
 let BBActive = false
 BBActive = false
 currentLevel = 0
-Levels = [tilemap`level2`, tilemap`level6`]
+Levels = [tilemap`level2`, tilemap`level6`, tilemap`level9`]
 tiles.setCurrentTilemap(Levels[currentLevel])
 scene.setBackgroundColor(11)
 mySprite = sprites.create(img`
@@ -1210,6 +1224,30 @@ info.setLife(4)
 forever(function () {
     if (mySprite.vy < 200) {
         mySprite.vy += 8
+    }
+})
+game.onUpdateInterval(500, function () {
+    if (BBActive) {
+        BlueBullet = sprites.createProjectileFromSprite(img`
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . 6 6 6 9 . . . . . 
+            . . . . . . 6 8 8 6 6 9 . 9 9 . 
+            . . . . . . . 6 6 . 9 . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            . . . . . . . . . . . . . . . . 
+            `, BlueBoss, randint(-50, 50), randint(-50, 0))
+        BlueBullet.follow(mySprite, 50)
+        BBulletArray.push(BlueBullet)
     }
 })
 game.onUpdateInterval(100, function () {
@@ -1340,24 +1378,5 @@ game.onUpdateInterval(100, function () {
             BlueBoss.vx = -10
         }
         BlueBoss.vy += 2
-        BlueBullet.follow(mySprite)
-        BlueBullet = sprites.createProjectileFromSprite(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . 6 6 6 9 . . . . . 
-            . . . . . . 6 8 8 6 6 9 . 9 9 . 
-            . . . . . . . 6 6 . 9 . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, BlueBoss, 50, 50)
     }
 })
