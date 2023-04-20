@@ -1045,11 +1045,14 @@ function itemPickUp (item: string, col: number, row: number) {
         return false
     }
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleRedCrystal, function (sprite, location) {
+    game.gameOver(true)
+})
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.collectibleInsignia, function (sprite, location) {
     currentLevel += 1
     tiles.setCurrentTilemap(Levels[currentLevel])
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(0, 5))
     if (currentLevel == 1) {
-        tiles.placeOnTile(mySprite, tiles.getTileLocation(0, 5))
         BBActive = true
         BlueBoss = sprites.create(img`
             .................666....1................
