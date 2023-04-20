@@ -1030,7 +1030,7 @@ function itemPickUp (item: string, col: number, row: number) {
             .......................
             `],
         1000,
-        false
+        true
         )
         mySprite.sayText("I found a " + item + "!", 1000, false)
         ofItemsHeld += 1
