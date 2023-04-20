@@ -708,7 +708,7 @@ sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Player, function (sprite, ot
             info.changeLifeBy(-1)
         }
         hurt = true
-        pause(5000)
+        pause(500)
         hurt = false
     }
 })
@@ -939,6 +939,11 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
 sprites.onOverlap(SpriteKind.sword, SpriteKind.Enemy, function (sprite, otherSprite) {
     otherSprite.startEffect(effects.ashes, 200)
     BBHP += playerDamage
+    if (BBHP <= 0) {
+        sprites.destroy(BlueBoss)
+        BBActive = false
+        tiles.setWallAt(tiles.getTileLocation(25, 5), false)
+    }
     pause(300)
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -1030,7 +1035,7 @@ function itemPickUp (item: string, col: number, row: number) {
             .......................
             `],
         1000,
-        false
+        true
         )
         mySprite.sayText("I found a " + item + "!", 1000, false)
         ofItemsHeld += 1
